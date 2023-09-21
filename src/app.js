@@ -8,8 +8,8 @@ require('dotenv').config()
 
 // setting up app
 const app = new App({
-  token: JSON.parse(process.env.SLACK_CREDS).SLACK_BOT_TOKEN,
-  appToken: JSON.parse(process.env.SLACK_CREDS).SLACK_APP_TOKEN,
+  token: ,
+  appToken: ,
   socketMode: true
 })
 
@@ -60,7 +60,7 @@ try {
     const commandObj = appHelper.commandParse(command.text)
 
     switch (commandObj.cmd) {
-      case 'create':{
+      case 'create': {
         // open group create modal
         try {
           await slack.sendCreateModal(app, command.trigger_id)
@@ -81,7 +81,7 @@ try {
         respond(res)
         break
       }
-      case 'delete':{
+      case 'delete': {
         const res = await appHelper.handleGroupDelete(app, allTasks, commandObj.groupName, command.user_id)
         respond(res)
         break

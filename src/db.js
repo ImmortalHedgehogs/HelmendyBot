@@ -9,16 +9,16 @@ const connectOptions = {
 }
 
 // connect to database
-const db = process.env.DEV == 1 ? 'db' : '127.0.0.1'
-mongoose.connect(`mongodb://${db}:27017/endybot`, connectOptions).then(
+//const db = process.env.DEV == 1 ? 'db' : '127.0.0.1'
+mongoose.connect(`mongodb://example-mongodb-svc:27017/endybot`, connectOptions).then(
   () => {
     console.log('Successfully connected to db')
   },
   err => {
-    console.log('Could not connect to db. Error: ' + err)
+    console.log('Could not connect to database Error: ' + err)
   })
 
-async function addToDB (groupJson) {
+async function addToDB(groupJson) {
   try {
     const inserted = await Group.create(groupJson)
     return inserted._id
@@ -35,7 +35,7 @@ async function addToDB (groupJson) {
  * @param {String} groupName
  * @returns String that expresses success or failure
  */
-async function deleteGroup (groupName) {
+async function deleteGroup(groupName) {
   // The groupName being passed in has already been verified by handleDeleteGroup in app-helper
   // remove the group, notify the subscribers and return results
   try {
@@ -57,7 +57,7 @@ async function deleteGroup (groupName) {
  * @param {String} userID
  * @returns String that contains the entire list print
  */
-async function listGroups (userID) {
+async function listGroups(userID) {
   // declare here so it's recognized in every try block
   let groups
   try {
@@ -128,7 +128,7 @@ async function listGroups (userID) {
  * @param {String} groupID
  * @returns JSON of Group info from database, -1 on error.
  */
-async function getGroup (groupName, groupID) {
+async function getGroup(groupName, groupID) {
   const searchParams = {}
 
   // if groupID is supplied, add it to the
@@ -156,7 +156,7 @@ async function getGroup (groupName, groupID) {
  * @param {String} groupname
  * @returns String
  */
-async function describeGroup (groupname) {
+async function describeGroup(groupname) {
   try {
     // Obtain group object thayt points to the database
     const group = await getGroup(groupname, undefined)
@@ -203,7 +203,7 @@ async function describeGroup (groupname) {
  * @param {String} userID
  * @returns String that denotes either a success or failure message
  */
-async function addSubscriber (groupname, userID) {
+async function addSubscriber(groupname, userID) {
   try {
     // Obtain group object that points to the database
     const group = await getGroup(groupname, undefined)
@@ -237,7 +237,7 @@ async function addSubscriber (groupname, userID) {
  * @param {String} userID
  * @returns String that denotes either a success or failure message
  */
-async function removeSubscriber (groupname, userID) {
+async function removeSubscriber(groupname, userID) {
   try {
     // Obtain group object thayt points to the database
     const group = await getGroup(groupname, undefined)
@@ -268,7 +268,7 @@ async function removeSubscriber (groupname, userID) {
  * @param {String} userID - Slack ID of the user to find all groups for
  * @returns a list of the groups a user is in
  */
-async function getUserGroups (userID) {
+async function getUserGroups(userID) {
   // declare here so it's recognized in every try block
   let groups
   try {
@@ -304,7 +304,7 @@ async function getUserGroups (userID) {
  * @param {String} UID - Slack User ID
  * @returns bool
  */
-async function checkUserPosted (UID, groupName) {
+async function checkUserPosted(UID, groupName) {
   try {
     const group = await Group.find({ name: groupName })
 
@@ -327,7 +327,7 @@ async function checkUserPosted (UID, groupName) {
  * @param {JSON} groupName
  * @param {bool} posted
  */
-async function updateUserPosted (user, groupName, posted) {
+async function updateUserPosted(user, groupName, posted) {
   try {
     const group = await Group.find({ name: groupName })
 
@@ -351,7 +351,7 @@ async function updateUserPosted (user, groupName, posted) {
  * @param {String} ts
  * @returns The updated group object on success, and null on failure
  */
-async function updateGroupPosted (group, ts) {
+async function updateGroupPosted(group, ts) {
   try {
     if (!ts) {
       group.posted = false

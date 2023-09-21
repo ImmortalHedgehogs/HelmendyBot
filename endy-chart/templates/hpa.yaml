@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "endy_chart.fullname" . }}
+  name: {{ include "endy-chart.fullname" . }}
   labels:
-    {{- include "endy_chart.labels" . | nindent 4 }}
+    {{- include "endy-chart.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "endy_chart.fullname" . }}
+    name: {{ include "endy-chart.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
