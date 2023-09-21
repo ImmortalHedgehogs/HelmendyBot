@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: traviskroll/helm_endy
+  repository: cfculler/helm-endybot
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "demo"
+  tag: "v1.0.6"
 
 imagePullSecrets: []
 nameOverride: ""

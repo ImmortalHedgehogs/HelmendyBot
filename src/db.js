@@ -5,12 +5,17 @@ const Group = require('../db-schemas/group.js')
 
 const connectOptions = {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  auth: {
+    // username: process.env.SECRET_USERNAME,
+    username: "my-user",
+    password: process.env.SECRET_PASSWORD
+  }
 }
 
 // connect to database
 //const db = process.env.DEV == 1 ? 'db' : '127.0.0.1'
-mongoose.connect(`mongodb://example-mongodb-svc:27017/endybot`, connectOptions).then(
+mongoose.connect(`mongodb://example-mongodb-svc:27017/endybot?authMechanism=SCRAM-SHA-1`, connectOptions).then(
   () => {
     console.log('Successfully connected to db')
   },

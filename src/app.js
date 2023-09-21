@@ -8,8 +8,8 @@ require('dotenv').config()
 
 // setting up app
 const app = new App({
-  token: ,
-  appToken: ,
+  token: process.env.SECRET_BOT_TOKEN,
+  appToken: process.env.SECRET_APP_TOKEN,
   socketMode: true
 })
 
@@ -35,10 +35,10 @@ try {
   app.start(process.env.PORT || 3000).then(console.log('⚡️ Bolt app is currently running!'))
 
   // determine slash command from dev value
-  slashcommand = '/endybot'
-  if (process.env.DEV == 1) {
-    slashcommand = '/endybot-dev'
-  }
+  slashcommand = '/endybot-dev'
+  // if (process.env.DEV == 1) {
+  //   slashcommand = '/endybot-dev'
+  // }
 
   // get user list so we can access contributor and subscriber timezones
   slack.getUserList(app).then((res) => {

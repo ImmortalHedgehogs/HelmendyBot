@@ -32,6 +32,42 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env:
+            # - name: SECRET_USERNAME
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: example-mongodb-admin-my-user
+            #       key: username
+            - name: SECRET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-user-password
+                  key: password
+            # - name: SECRET_CONNECTION_STRING_STANDARD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: example-mongodb-admin-my-user
+            #       key: connectionString.standard
+            # - name: SECRET_CONNECTION_STRING_SRV
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: example-mongodb-admin-my-user
+            #       key: connectionString.standardSrv
+            - name: SECRET_APP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: slack-creds
+                  key: app.txt
+            - name: SECRET_BOT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: slack-creds
+                  key: bot.txt
+            - name: ORG
+              valueFrom:
+                secretKeyRef:
+                  name: org
+                  key: org.txt
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
